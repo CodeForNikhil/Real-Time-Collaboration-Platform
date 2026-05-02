@@ -1,0 +1,100 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "notifications")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Notification {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long userId;
+    private String type;
+
+    @Column(length = 1000)
+    private String message;
+
+    private boolean readFlag;
+
+	public Notification( Long userId, String type, String message, boolean readFlag) {
+		super();
+		this.userId = userId;
+		this.type = type;
+		this.message = message;
+		this.readFlag = readFlag;
+	}
+	
+	
+
+	public Notification() {
+		super();
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public boolean isReadFlag() {
+		return readFlag;
+	}
+
+	public void setReadFlag(boolean readFlag) {
+		this.readFlag = readFlag;
+	}
+
+	@Override
+	public String toString() {
+		return "Notification [id=" + id + ", userId=" + userId + ", type=" + type + ", message=" + message
+				+ ", readFlag=" + readFlag + "]";
+	}
+    
+    
+    
+}

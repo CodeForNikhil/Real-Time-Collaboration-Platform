@@ -1,0 +1,81 @@
+package com.example.demo.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.websocket.PresencePayload;
+import com.example.demo.entity.User;
+import com.example.demo.entity.UserSession;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserSessionRepository;
+import com.example.demo.service.PresenceService;
+import com.example.demo.util.TimeUtil;
+
+
+@Service
+public class PresenceServiceImpl implements PresenceService{
+	
+	@Autowired
+	private  UserSessionRepository userSessionRepository;
+    @Autowired
+	private  SimpMessagingTemplate messagingTemplate;
+    
+    @Autowired
+    private  UserRepository userRepository;
+
+    @Override
+    public void markUserOnline(Long userId) {
+    	UserSession session = userSessionRepository.findByUserId(userId)
+                .orElse(new UserSession());
+
+        session.setUserId(userId);
+        session.setOnline(true);
+        session.setLastSeen(TimeUtil.now());
+        userSessionRepository.save(session);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        PresencePayload payload = new PresencePayload(
+                user.getId(),
+                user.getFullName(),
+                user.getRole(),
+                "ONLINE"
+        );
+
+        messagingTemplate.convertAndSend("/topic/presence", payload);
+        }
+
+    @Override
+    public void markUserOffline(Long userId) {
+    	userSessionRepository.findByUserId(userId).ifPresent(session -> {
+            session.setOnline(false);
+            session.setLastSeen(TimeUtil.now());
+            userSessionRepository.save(session);
+
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            PresencePayload payload = new PresencePayload(
+                    user.getId(),
+                    user.getFullName(),
+                    user.getRole(),
+                    "OFFLINE"
+            );
+
+            messagingTemplate.convertAndSend("/topic/presence", payload);
+        });
+    }
+
+	@Override
+	public void processPresenceUpdate(PresencePayload payload) {
+		if ("ONLINE".equalsIgnoreCase(payload.getStatus())) {
+            markUserOnline(payload.getUserId());
+        } else {
+            markUserOffline(payload.getUserId());
+        }	
+	}
+
+
+}

@@ -1,0 +1,12 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import com.example.demo.dto.response.OnlineUserResponse;
+import com.example.demo.dto.response.UserResponse;
+
+public interface OnlineUserService {
+	
+	public List<OnlineUserResponse> getOnlineUsersExcludingCurrentUser();
+
+}

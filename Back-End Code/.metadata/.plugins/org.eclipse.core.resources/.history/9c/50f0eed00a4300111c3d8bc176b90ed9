@@ -1,0 +1,11 @@
+package com.example.demo.exception;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse handleGeneric(Exception ex) {
+        return new ApiResponse(false, ex.getMessage());
+    }
+

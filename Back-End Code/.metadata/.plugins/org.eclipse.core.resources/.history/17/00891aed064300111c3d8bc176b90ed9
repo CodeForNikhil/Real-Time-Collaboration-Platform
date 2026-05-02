@@ -1,0 +1,17 @@
+package com.example.demo.kafka.producer;
+
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class ChatEventProducer {
+
+	private final KafkaTemplate<String, Object> kafkaTemplate;
+
+	public void publish(ChatEvent event) {
+		kafkaTemplate.send("chat-events", String.valueOf(event.getSenderId()), event);
+	}
+}

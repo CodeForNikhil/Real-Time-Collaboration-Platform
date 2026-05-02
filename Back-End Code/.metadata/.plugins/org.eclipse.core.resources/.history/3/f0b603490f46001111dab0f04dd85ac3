@@ -1,0 +1,46 @@
+package com.example.demo.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.response.MessageResponse;
+import com.example.demo.dto.websocket.ChatMessagePayload;
+import com.example.demo.entity.Message;
+import com.example.demo.kafka.event.ChatEvent;
+import com.example.demo.kafka.producer.ChatEventProducer;
+import com.example.demo.repository.MessageRepository;
+import com.example.demo.service.ChatService;
+import com.example.demo.util.MapperUtil;
+
+@Service
+public class ChatServiceImpl implements ChatService{
+	
+	@Autowired
+	private MessageRepository messageRepository;
+    @Autowired
+	private ChatEventProducer chatEventProducer;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Override
+    public void processIncomingMessage(ChatMessagePayload payload) {
+        Message message = new Message(payload.getSenderId(), payload.getReceiverId(), payload.getContent(),
+        		payload.getMessageType(),true,false);
+               
+        messageRepository.save(message);
+        messagingTemplate.convertAndSendToUser(String.valueOf(payload.getReceiverId()), "/queue/messages", payload);
+        chatEventProducer.publish(new ChatEvent(payload.getSenderId(), payload.getReceiverId(), payload.getContent()));
+    }
+
+    @Override
+    public List<MessageResponse> getHistory(Long otherUserId) {
+        return messageRepository.findConversation(1L, otherUserId).stream()
+                .map(MapperUtil::toMessageResponse)
+                .toList();
+    }
+
+
+}

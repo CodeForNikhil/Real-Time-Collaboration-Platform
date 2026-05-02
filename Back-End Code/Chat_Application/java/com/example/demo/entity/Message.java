@@ -1,0 +1,102 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "messages")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Message {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long senderId;
+    private Long receiverId;
+
+    @Column(length = 2000)
+    private String content;
+
+    private String messageType;
+    private boolean delivered;
+    private boolean readFlag;
+    
+    
+	public Message() {
+		super();
+	}
+	public Message( Long senderId, Long receiverId, String content, String messageType, boolean delivered,
+			boolean readFlag) {
+		super();
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.content = content;
+		this.messageType = messageType;
+		this.delivered = delivered;
+		this.readFlag = readFlag;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getSenderId() {
+		return senderId;
+	}
+	public void setSenderId(Long senderId) {
+		this.senderId = senderId;
+	}
+	public Long getReceiverId() {
+		return receiverId;
+	}
+	public void setReceiverId(Long receiverId) {
+		this.receiverId = receiverId;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	public boolean isDelivered() {
+		return delivered;
+	}
+	public void setDelivered(boolean delivered) {
+		this.delivered = delivered;
+	}
+	public boolean isReadFlag() {
+		return readFlag;
+	}
+	public void setReadFlag(boolean readFlag) {
+		this.readFlag = readFlag;
+	}
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", senderId=" + senderId + ", receiverId=" + receiverId + ", content=" + content
+				+ ", messageType=" + messageType + ", delivered=" + delivered + ", readFlag=" + readFlag + "]";
+	}
+    
+    
+}
+

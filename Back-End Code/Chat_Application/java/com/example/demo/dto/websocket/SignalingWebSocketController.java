@@ -1,0 +1,22 @@
+package com.example.demo.dto.websocket;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+
+import com.example.demo.service.SignalingService;
+
+@Controller
+public class SignalingWebSocketController {
+
+    private final SignalingService signalingService;
+
+    public SignalingWebSocketController(SignalingService signalingService) {
+        this.signalingService = signalingService;
+    }
+
+    @MessageMapping("/signal.exchange")
+    public void exchangeSignal(SignalingPayload payload) {
+        System.out.println("Signal controller hit: " + payload.getType());
+        signalingService.forwardSignal(payload);
+    }
+}

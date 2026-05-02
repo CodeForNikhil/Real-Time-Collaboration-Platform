@@ -1,0 +1,20 @@
+package com.example.demo.dto.websocket;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+
+import com.example.demo.service.ChatService;
+
+@Controller
+public class ChatWebSocketController {
+	
+	private ChatService chatService;
+	
+	@MessageMapping("/chat.send")
+	public void sendMessage(ChatMessagePayload payload) {
+		chatService.processIncomingMessage(payload);
+	}
+	
+	
+
+}

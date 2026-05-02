@@ -1,0 +1,12 @@
+package com.example.demo.service;
+
+import com.example.demo.dto.websocket.PresencePayload;
+
+public interface PresenceService {
+	
+	void markUserOnline(Long userId);
+    void markUserOffline(Long userId);
+    void processPresenceUpdate(PresencePayload payload);
+
+
+}

@@ -1,0 +1,22 @@
+package com.example.demo.security;
+
+import java.security.Key;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+@Service
+public class JwtService {
+	
+	@Value("${jwt.secret}")
+	private String secret;
+	
+	@Value("${jwt.expiration-ms}")
+	private Long expiration;
+	
+	private Key getSigningKey() {
+		return ;
+	}
+	
+
+}

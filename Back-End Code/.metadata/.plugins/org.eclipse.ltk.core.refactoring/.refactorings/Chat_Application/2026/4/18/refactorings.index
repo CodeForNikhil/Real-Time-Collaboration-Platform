@@ -1,0 +1,11 @@
+1777200107715	Rename package 'com.example.demo.user'
+1777200206662	Rename type 'UserEntity'
+1777202310095	Rename type 'ChatMessage'
+1777208614282	Move compilation unit
+1777219366215	Rename package 'com.example.demo.auth'
+1777377526988	Rename package 'com.example.demo.signalling'
+1777381551880	Rename type 'OnlineUserResponse'
+1777383640287	Delete element
+1777383647655	Delete element
+1777383653070	Delete element
+1777388969047	Move source folder

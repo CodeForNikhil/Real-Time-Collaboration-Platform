@@ -1,0 +1,47 @@
+package com.example.demo.service.impl;
+
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+
+import com.example.demo.dto.websocket.PresencePayload;
+import com.example.demo.entity.UserSession;
+import com.example.demo.repository.UserSessionRepository;
+import com.example.demo.service.PresenceService;
+
+import ch.qos.logback.core.util.TimeUtil;
+
+public class PresenceServiceImpl implements PresenceService{
+	
+	private final UserSessionRepository userSessionRepository;
+    private final SimpMessagingTemplate messagingTemplate;
+
+    @Override
+    public void markUserOnline(Long userId) {
+        UserSession session = userSessionRepository.findByUserId(userId).orElse(new UserSession());
+        session.setUserId(userId);
+        session.setOnline(true);
+        session.setLastSeen(TimeUtil.now());
+        userSessionRepository.save(session);
+        messagingTemplate.convertAndSend("/topic/presence", new PresencePayload(userId, "ONLINE"));
+    }
+
+    @Override
+    public void markUserOffline(Long userId) {
+        userSessionRepository.findByUserId(userId).ifPresent(session -> {
+            session.setOnline(false);
+            session.setLastSeen(TimeUtil.now());
+            userSessionRepository.save(session);
+            messagingTemplate.convertAndSend("/topic/presence", new PresencePayload(userId, "OFFLINE"));
+        });
+    }
+
+	@Override
+	public void processPresenceUpdate(PresencePayload payload) {
+		if ("ONLINE".equalsIgnoreCase(payload.getStatus())) {
+            markUserOnline(payload.getUserId());
+        } else {
+            markUserOffline(payload.getUserId());
+        }	
+	}
+
+
+}

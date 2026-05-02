@@ -1,0 +1,28 @@
+package com.example.demo.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.response.UserResponse;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserSessionRepository;
+
+@Service
+public class OnlineUserServiceImpl {
+
+	private final UserRepository userRepository;
+    private final UserSessionRepository userSessionRepository;
+
+    @Override
+    public List<UserResponse> getOnlineUsersExcludingCurrentUser() {
+        Long currentUserId = 1L; // Replace with auth-context-based lookup.
+        return userSessionRepository.findByOnlineTrueAndUserIdNot(currentUserId).stream()
+                .map(session -> {
+                    var user = userRepository.findById(session.getUserId()).orElseThrow();
+                    return new UserResponse(user.getId(), user.getFullName(), user.getRole(), true);
+                })
+                .toList();
+    }
+
+}

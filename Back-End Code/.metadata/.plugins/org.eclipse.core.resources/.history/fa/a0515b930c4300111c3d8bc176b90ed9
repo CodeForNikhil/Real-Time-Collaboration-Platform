@@ -1,0 +1,9 @@
+package com.example.demo.service;
+
+public interface UserService {
+	
+	UserResponse getCurrentUser();
+    UserResponse getById(Long id);
+
+
+}

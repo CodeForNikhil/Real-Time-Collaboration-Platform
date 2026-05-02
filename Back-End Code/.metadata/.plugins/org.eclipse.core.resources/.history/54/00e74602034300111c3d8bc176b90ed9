@@ -1,0 +1,74 @@
+package com.example.demo.dto.response;
+
+public class UserResponse {
+	
+	private Long userId;
+	
+	private String userName;
+	
+	private String role;
+	
+	private String fullName;
+
+	
+	public UserResponse() {
+		super();
+	}
+
+
+	public UserResponse(Long userId, String userName, String role, String fullName) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.role = role;
+		this.fullName = fullName;
+	}
+
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
+	public String getFullName() {
+		return fullName;
+	}
+
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+
+	@Override
+	public String toString() {
+		return "OnlineUserResponse [userId=" + userId + ", userName=" + userName + ", role=" + role + ", fullName="
+				+ fullName + "]";
+	}
+
+}

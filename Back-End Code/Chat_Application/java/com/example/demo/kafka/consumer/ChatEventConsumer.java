@@ -1,0 +1,18 @@
+package com.example.demo.kafka.consumer;
+
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
+
+import com.example.demo.kafka.event.ChatEvent;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ChatEventConsumer {
+
+    @KafkaListener(topics = "chat-events", groupId = "collab-group")
+    public void listen(ChatEvent event) {
+        System.out.printf("Consumed chat event: {}"+ event);
+    }
+}

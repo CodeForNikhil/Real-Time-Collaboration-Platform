@@ -1,0 +1,26 @@
+package com.example.demo.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.example.demo.dto.response.ApiResponse;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse handleGeneric(Exception ex) {
+        return new ApiResponse(false, ex.getMessage());
+    }
+    
+    
+    @ExceptionHandler(DuplicateUserException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiResponse handleDuplicateUser(DuplicateUserException ex) {
+        return new ApiResponse(false, ex.getMessage());
+    }
+
+}

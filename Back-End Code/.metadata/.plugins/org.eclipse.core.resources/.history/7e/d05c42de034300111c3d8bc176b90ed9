@@ -1,0 +1,21 @@
+package com.example.demo.dto.websocket;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+
+import com.example.demo.service.SignalingService;
+
+import lombok.AllArgsConstructor;
+
+@Controller
+@AllArgsConstructor
+public class SignalingWebSocketController {
+
+	private SignalingService signalingService;
+
+    @MessageMapping("/signal.exchange")
+    public void exchangeSignal(SignalingPayload payload) {
+        signalingService.forwardSignal(payload);
+    }
+
+}

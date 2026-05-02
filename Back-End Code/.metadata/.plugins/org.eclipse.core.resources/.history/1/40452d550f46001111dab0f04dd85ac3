@@ -1,0 +1,29 @@
+package com.example.demo.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.websocket.SignalingPayload;
+import com.example.demo.kafka.event.CallEvent;
+import com.example.demo.kafka.producer.CallEventProducer;
+import com.example.demo.service.SignalingService;
+
+@Service
+public class SignalingServiceImpl implements SignalingService  {
+
+	@Autowired
+	private  SimpMessagingTemplate messagingTemplate;
+	@Autowired
+	private  CallEventProducer callEventProducer;
+
+    @Override
+    public void forwardSignal(SignalingPayload payload) {
+        messagingTemplate.convertAndSendToUser(
+                String.valueOf(payload.getTargetUserId()),
+                "/queue/signaling",
+                payload);
+        callEventProducer.publish(new CallEvent(payload.getCallerUserId(), payload.getTargetUserId(), payload.getType()));
+    }
+
+}

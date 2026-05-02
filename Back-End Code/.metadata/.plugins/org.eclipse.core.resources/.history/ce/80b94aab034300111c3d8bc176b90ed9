@@ -1,0 +1,118 @@
+package com.example.demo.dto.websocket;
+
+public class SignalingPayload {
+	
+	private String type;
+	
+	private Long fromUserId;
+	
+	private Long toUserId;
+	
+	private String callType;
+	
+	private String sdp;
+	
+	private String candidate;
+
+	
+	
+	public SignalingPayload() {
+		super();
+	}
+
+
+
+	public SignalingPayload(String type, Long fromUserId, Long toUserId, String callType, String sdp,
+			String candidate) {
+		super();
+		this.type = type;
+		this.fromUserId = fromUserId;
+		this.toUserId = toUserId;
+		this.callType = callType;
+		this.sdp = sdp;
+		this.candidate = candidate;
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+
+	public Long getFromUserId() {
+		return fromUserId;
+	}
+
+
+
+	public void setFromUserId(Long fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+
+
+
+	public Long getToUserId() {
+		return toUserId;
+	}
+
+
+
+	public void setToUserId(Long toUserId) {
+		this.toUserId = toUserId;
+	}
+
+
+
+	public String getCallType() {
+		return callType;
+	}
+
+
+
+	public void setCallType(String callType) {
+		this.callType = callType;
+	}
+
+
+
+	public String getSdp() {
+		return sdp;
+	}
+
+
+
+	public void setSdp(String sdp) {
+		this.sdp = sdp;
+	}
+
+
+
+	public String getCandidate() {
+		return candidate;
+	}
+
+
+
+	public void setCandidate(String candidate) {
+		this.candidate = candidate;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "SignalingPayload [type=" + type + ", fromUserId=" + fromUserId + ", toUserId=" + toUserId
+				+ ", callType=" + callType + ", sdp=" + sdp + ", candidate=" + candidate + "]";
+	}
+	
+	
+
+}

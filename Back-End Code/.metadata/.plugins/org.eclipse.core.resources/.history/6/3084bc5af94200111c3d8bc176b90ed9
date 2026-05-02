@@ -1,0 +1,9 @@
+package com.example.demo.service;
+
+public interface ChatService {
+	
+	void processIncomingMessage(ChatMessagePayload payload);
+    List<MessageResponse> getHistory(Long otherUserId);
+
+
+}
