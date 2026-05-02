@@ -34,12 +34,13 @@ This application demonstrates how a modern collaboration platform works internal
 
 ### Real-Time Chat Screen
 
-![Real-Time Chat](demo-assets/chat_happy.png)
+![Real-Time Chat](demo-assets/chat_Nikhil.png)
+
 
 
 ---
 
-![Real-Time Chat](demo-assets/chat_Nikhil.png)
+![Real-Time Chat](demo-assets/chat_happy.png)
 
 
 ---
